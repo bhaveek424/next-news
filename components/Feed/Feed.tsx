@@ -1,11 +1,27 @@
+import { Category, Post } from "../../shared/types";
 import { Section } from "../Section";
 
-export const Feed = () => {
+type FeedProps = {
+  posts: Post[];
+  categories: Category[];
+};
+
+export const Feed = ({ posts, categories }: FeedProps) => {
   return (
     <>
-      <Section title="Science" />
-      <Section title="Technology" />
-      <Section title="Arts" />
+      {categories.map((currentCategory) => {
+        const inSection = posts.filter(
+          (post) => post.category === currentCategory
+        );
+
+        return (
+          <Section
+            key={currentCategory}
+            title={currentCategory}
+            posts={inSection}
+          />
+        );
+      })}
     </>
   );
 };

@@ -4,21 +4,23 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "concurrently --kill-others \"yarn serve\" \"next\"",
     "build": "next build",
     "start": "next start",
-    "serve": "ts-node -0 '{\"module\": \"commonjs\"}'./server/index.ts"
+    "serve": "ts-node -O '{\"module\": \"commonjs\"}' ./server/index.ts",
+    "dev": "concurrently --kill-others \"yarn serve\" \"next\""
   },
   "dependencies": {
     "@types/styled-components": "^5.1.26",
     "body-parser": "^1.20.0",
+    "concurrently": "^7.4.0",
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "next": "^12.3.1",
     "node-fetch": "^3.2.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "styled-components": "^5.3.6"
+    "styled-components": "^5.3.6",
+    "ts-node": "^10.9.1"
   },
   "devDependencies": {
     "@types/node": "^18.7.23",
