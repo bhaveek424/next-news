@@ -6,7 +6,6 @@ import Document, {
   Main,
   NextScript,
   DocumentContext,
-  DocumentInitialProps,
 } from "next/document";
 
 export default class MyDocument extends Document {
@@ -20,6 +19,7 @@ export default class MyDocument extends Document {
           enhanceApp: (App) => (props) =>
             sheet.collectStyles(<App {...props} />),
         });
+
       const initialProps = await Document.getInitialProps(ctx);
 
       return {
@@ -37,17 +37,15 @@ export default class MyDocument extends Document {
   }
 
   render() {
+    const description = "The Next generation of a news feed";
+    const fontsUrl =
+      "https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap";
+
     return (
       <Html>
         <Head>
-          <meta
-            name="description"
-            content="The Next generation of a news feed"
-          />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap"
-            rel="stylesheet"
-          />
+          <meta name="description" content={description} />
+          <link href={fontsUrl} rel="stylesheet" />
           {this.props.styles}
         </Head>
 
