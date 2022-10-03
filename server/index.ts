@@ -11,11 +11,11 @@ app.use(bodyParser.json());
 
 const port = 4000;
 
-app.get("./posts", (_, res) => {
+app.get("/posts", (_, res) => {
   return res.json(posts);
 });
 
-app.get("./categories", (_, res) => {
+app.get("/categories", (_, res) => {
   return res.json(categories);
 });
 
