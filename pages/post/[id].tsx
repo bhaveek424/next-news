@@ -1,14 +1,30 @@
+import { GetStaticProps } from "next";
+import { fetchPost } from "../../api/post";
 import { useRouter } from "next/router";
+import { Post as PostType } from "../../shared/types";
+import { Loader } from "../../components/Loader";
+import { postPaths as paths } from "../../shared/staticPaths";
+import { PostBody } from "../../components/Post/PostBody";
 
-const Post = () => {
-  const { pathname, query } = useRouter();
+type PostProps = {
+  post: PostType;
+};
 
-  return (
-    <div>
-      Pathname: {pathname};<br />
-      Post Id: {query.id}.
-    </div>
-  );
+export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
+  if (typeof params.id !== "string") throw new Error("Unexpected id");
+  const post = await fetchPost(params.id);
+  return { props: { post } };
+};
+
+export async function getStaticPaths() {
+  return { paths, fallback: true };
+}
+
+const Post = ({ post }: PostProps) => {
+  const router = useRouter();
+
+  if (router.isFallback) return <Loader />;
+  return <PostBody post={post} />;
 };
 
 export default Post;
