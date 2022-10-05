@@ -13,8 +13,7 @@ type CategoryProps = {
 export const getStaticProps: GetStaticProps<CategoryProps> = async ({
   params,
 }) => {
-  if (typeof params.id !== "string") throw new Error("Unexpected id");
-  const posts = await fetchPosts(params.id);
+  const posts = await fetchPosts(params.id as string);
   return { props: { posts } };
 };
 
@@ -22,11 +21,11 @@ export async function getStaticPaths() {
   return { paths, fallback: true };
 }
 
-const Category = ({ posts }: CategoryProps) => {
+const Category = ({ posts }) => {
   const router = useRouter();
 
   if (router.isFallback) return <Loader />;
-  return <Section posts={posts} title={String(router.query.id)} />;
+  return <Section posts={posts} title={router.query.id as string} />;
 };
 
 export default Category;
