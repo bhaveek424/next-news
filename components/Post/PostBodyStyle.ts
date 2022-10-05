@@ -43,6 +43,6 @@ export const Meta = styled.footer`
   color: ${(p) => p.theme.colors.gray};
 
   & > * {
-    margin-right: 0.3rem;
+    margin-right: 0.3em;
   }
 `;

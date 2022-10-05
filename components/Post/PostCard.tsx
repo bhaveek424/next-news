@@ -13,7 +13,7 @@ export const PostCard = ({ post }: PostCardProps) => {
         <Figure>
           <img alt={post.title} src={post.image} />
         </Figure>
-        <Title>Post Title!</Title>
+        <Title>{post.title}</Title>
         <Excerpt>{post.lead}</Excerpt>
       </Card>
     </Link>
