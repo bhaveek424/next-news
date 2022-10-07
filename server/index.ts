@@ -6,6 +6,7 @@ import { Post } from "../shared/types";
 const categories = require("./categories.json");
 const posts = require("./posts.json");
 const app = express();
+const comments = require("./comments.json");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -36,3 +37,9 @@ app.get("/categories/:id", (req, res) => {
 app.listen(port, () =>
   console.log(`DB is running on http://localhost:${port}!`)
 );
+
+app.get("/comments/:post", (req, res) => {
+  const postId = Number(req.params.post);
+  const found = comments.filter(({ post }) => post === postId);
+  return res.json(found);
+});
