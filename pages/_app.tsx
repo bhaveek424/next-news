@@ -6,8 +6,9 @@ import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
 import { Center } from "../components/Center";
 import { GlobalStyle, theme } from "../shared/theme";
+import { store } from "../store";
 
-export default function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle theme={theme} />
@@ -25,3 +26,5 @@ export default function MyApp({ Component, pageProps }) {
     </ThemeProvider>
   );
 }
+
+export default store.withRedux(MyApp);

@@ -25,6 +25,8 @@ export const Form = styled.form`
     cursor: pointer;
 
     &:hover {
+      background-color: rgb(106, 82, 253);
+      color: #fff;
       box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.035), 0 6px 35px rgba(0, 0, 0, 0.2);
     }
   }
