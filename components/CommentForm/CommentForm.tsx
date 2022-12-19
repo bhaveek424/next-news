@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from "react";
 import { EntityId } from "../../shared/types";
 import { Form } from "./style";
-import { submitComment } from "../../api/comments/submit";
+import { submitComment } from "../../request";
 import { useDispatch } from "react-redux";
 import { UPDATE_COMMENTS_ACTION } from "../../store/comments";
 

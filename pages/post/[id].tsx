@@ -1,13 +1,10 @@
 import React from "react";
-import { GetServerSideProps, GetStaticProps, NextPage } from "next";
-import { fetchPost } from "../../api/post";
-import { useRouter } from "next/router";
+import { NextPage } from "next";
+import { fetchPost, fetchComments } from "../../request";
 import { Comment, Post as PostType } from "../../shared/types";
 import { Loader } from "../../components/Loader";
-import { postPaths as paths } from "../../shared/staticPaths";
 import { PostBody } from "../../components/Post/PostBody";
 import { Comments } from "../../components/Comments";
-import { fetchComments } from "../../api/comments/fetch";
 import { useSelector } from "react-redux";
 import { State, store } from "../../store";
 import { PostState, UPDATE_POST_ACTION } from "../../store/post";
@@ -46,6 +43,22 @@ type PostProps = {
 }; */
 }
 
+export const getServerSideProps = store.getServerSideProps(
+  (store) =>
+    async ({ params }) => {
+      if (typeof params.id !== "string") {
+        throw new Error("Unexpected id");
+      }
+      const comments = await fetchComments(params.id);
+      const post = await fetchPost(params.id);
+
+      store.dispatch({ type: UPDATE_POST_ACTION, post });
+      store.dispatch({ type: UPDATE_COMMENTS_ACTION, comments });
+
+      return null;
+    }
+);
+
 const Post: NextPage = () => {
   const post = useSelector<State, PostState>(({ post }) => post);
   const comments = useSelector<State, CommentsState>(
@@ -63,19 +76,3 @@ const Post: NextPage = () => {
 };
 
 export default Post;
-
-export const getServerSideProps = store.getServerSideProps(
-  (store) =>
-    async ({ params }) => {
-      if (typeof params.id !== "string") {
-        throw new Error("Unexpected id");
-      }
-      const comments = await fetchComments(params.id);
-      const post = await fetchPost(params.id);
-
-      store.dispatch({ type: UPDATE_POST_ACTION, post });
-      store.dispatch({ type: UPDATE_COMMENTS_ACTION, comments });
-
-      return null;
-    }
-);
