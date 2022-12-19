@@ -2,14 +2,14 @@ import React from "react";
 import Head from "next/head";
 import { Post, Category } from "../shared/types";
 import { Feed } from "../components/Feed";
-import { fetchPosts, fetchCategories } from "../api/summary";
+import { fetchPosts, fetchCategories } from "../request";
 
 type FrontProps = {
   posts: Post[];
   categories: Category[];
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const categories = await fetchCategories();
   const posts = await fetchPosts();
   return { props: { posts, categories } };
